@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fractax · En mantenimiento</title>
+  <meta name="description" content="Fractax está en mantenimiento. Volvemos en breve.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="icon" href="/img/logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/img/logo-256.png">
+  <style>
+    @font-face {
+      font-family: "Inter";
+      src: url("/fonts/inter-latin.woff2") format("woff2");
+      font-weight: 100 900;
+      font-display: swap;
+    }
+    :root {
+      --paper: #FFFFFF;
+      --tint: #F7F7F5;
+      --ink: #191919;
+      --text: #37352F;
+      --slate: #787774;
+      --line: #E9E9E7;
+      --blue: #2383E2;
+      --font: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--tint);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 16.5px;
+      line-height: 1.6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    main {
+      width: 100%;
+      max-width: 480px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 19px;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+    h1 {
+      margin: 0 0 12px;
+      color: var(--ink);
+      font-size: clamp(24px, 5vw, 30px);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    p { margin: 0 0 12px; }
+    .en { color: var(--slate); font-size: 14px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand"><img src="/img/logo.svg" alt="" width="28" height="28">Fractax</div>
+    <h1>Estamos en mantenimiento</h1>
+    <p>Estamos haciendo mejoras en la web. Volvemos en breve.</p>
+    <p>Si necesitas ayuda, escríbenos a <a href="mailto:support@fractax.com">support@fractax.com</a>.</p>
+    <p class="en" lang="en">We're down for maintenance and will be back shortly. Contact: <a href="mailto:support@fractax.com">support@fractax.com</a></p>
+  </main>
+</body>
+</html>
