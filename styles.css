@@ -312,3 +312,14 @@ h2 { font-size: var(--t-xl); line-height: 1.12; margin: 0 0 16px; }
 .plan .price-text { font-size: 30px; letter-spacing: -0.02em; }
 .plan .tag-soon { background: var(--tint); color: var(--slate); }
 .plan.business { border-style: dashed; }
+
+/* Videos mas grandes: el texto arriba y el video a todo el ancho debajo,
+ * para que se lea la interfaz de la app (los videos son de 1440 px). */
+.hero-grid { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+.hero-copy { max-width: 760px; }
+.hero-visual { width: 100%; }
+.split:has(> .window) { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+.split:has(> .window) .split-copy { max-width: 760px; }
+/* En guias y articulos el video sale de la columna de texto. */
+.article-video { width: min(1112px, calc(100vw - 48px)); margin: 8px 0 12px 50%; transform: translateX(-50%); }
+@media (max-width: 760px) { .article-video { width: 100%; margin-left: 0; transform: none; } }
