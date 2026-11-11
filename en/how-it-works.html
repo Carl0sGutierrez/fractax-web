@@ -84,28 +84,28 @@
       <div class="wrap">
         <div class="section-head">
           <h2>Under the hood: how Fractax keeps each certificate apart</h2>
-          <p>Fractax is built on <strong>Chromium</strong>, the same engine used by Chrome and Edge, so government sites look and work the same. The difference is how it organises sessions.</p>
+          <p>What Fractax does so that each certificate stays on its own, never mixed with the others.</p>
         </div>
         <div class="feature-list">
           <div class="feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
-            <h3>One browsing context per certificate</h3>
-            <p>Each identity has its own Chromium context, with its own cookies, cache, storage and sessions. What one identity does on a site, no other identity sees.</p>
+            <h3>A separate space for each certificate</h3>
+            <p>Each identity has its own cookies, cache, storage and sessions. What one identity does on a site, no other identity sees.</p>
           </div>
           <div class="feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
             <h3>Certificates never cross over</h3>
-            <p>Chromium remembers which certificate you picked for the whole browser, not for each tab. That is why a regular browser keeps using the first one. In Fractax each identity has its own context, and when a site asks for a certificate Fractax answers only with the one for the identity you are in.</p>
+            <p>A regular browser remembers the certificate you picked for the whole browser, which is why it keeps using the first one. In Fractax, when a site asks for a certificate, only the one for the identity you are in is used.</p>
           </div>
           <div class="feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg>
             <h3>Sessions kept in memory only</h3>
-            <p>Site sessions are kept in memory, not on disk: when you close Fractax they are gone. “Log out” destroys that identity’s context and creates a clean one, so the site asks for the certificate again.</p>
+            <p>Site sessions are kept in memory, not on disk: when you close Fractax they are gone. “Log out” clears that identity’s session and starts a clean one, so the site asks for the certificate again.</p>
           </div>
           <div class="feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
             <h3>Sites isolated from Fractax</h3>
-            <p>Every page runs inside Chromium’s <em>sandbox</em>, with no access to your files or to Fractax. Camera, microphone, location and browser notifications are blocked: only copying to the clipboard, full screen and opening AutoFirma are allowed.</p>
+            <p>Every page runs isolated, with no access to your files or to Fractax. Camera, microphone, location and browser notifications are blocked: only copying to the clipboard, full screen and opening AutoFirma are allowed.</p>
           </div>
         </div>
       </div>

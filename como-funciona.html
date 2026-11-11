@@ -84,28 +84,28 @@
       <div class="wrap">
         <div class="section-head">
           <h2>Por dentro: cómo separa Fractax cada certificado</h2>
-          <p>Fractax está basado en <strong>Chromium</strong>, el mismo motor que usan Chrome y Edge, así que las sedes se ven y funcionan igual. La diferencia está en cómo organiza las sesiones.</p>
+          <p>Lo que hace Fractax para que cada certificado vaya por su lado, sin mezclarse con los demás.</p>
         </div>
         <div class="feature-list">
           <div class="feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
-            <h3>Un contexto de navegación por certificado</h3>
-            <p>Cada identidad tiene su propio contexto de Chromium, con sus cookies, su caché, su almacenamiento y sus sesiones. Lo que hace una identidad en una sede no lo ve ninguna otra.</p>
+            <h3>Un espacio separado para cada certificado</h3>
+            <p>Cada identidad tiene sus propias cookies, su caché, su almacenamiento y sus sesiones. Lo que hace una identidad en una sede no lo ve ninguna otra.</p>
           </div>
           <div class="feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
             <h3>El certificado no se cruza</h3>
-            <p>Chromium recuerda qué certificado elegiste para todo el navegador, no para cada pestaña. Por eso un navegador normal sigue usando el primero. En Fractax cada identidad tiene su contexto, y cuando una sede pide certificado Fractax responde solo con el de la identidad en la que estás.</p>
+            <p>Un navegador normal recuerda el certificado que elegiste para todo el navegador, por eso sigue usando el primero. En Fractax, cuando una sede pide certificado, se responde solo con el de la identidad en la que estás.</p>
           </div>
           <div class="feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg>
             <h3>Sesiones solo en memoria</h3>
-            <p>Las sesiones de las sedes se guardan en memoria, no en el disco: al cerrar Fractax desaparecen. «Cerrar sesión» destruye el contexto de esa identidad y crea uno limpio, así que la sede vuelve a pedir el certificado.</p>
+            <p>Las sesiones de las sedes se guardan en memoria, no en el disco: al cerrar Fractax desaparecen. «Cerrar sesión» borra la sesión de esa identidad y empieza una limpia, así que la sede vuelve a pedir el certificado.</p>
           </div>
           <div class="feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
             <h3>Las sedes, aisladas de Fractax</h3>
-            <p>Cada página se ejecuta en el entorno aislado (<em>sandbox</em>) de Chromium, sin acceso a tus archivos ni a Fractax. Cámara, micrófono, ubicación y notificaciones del navegador están bloqueados: solo se permite copiar al portapapeles, la pantalla completa y abrir AutoFirma.</p>
+            <p>Cada página se ejecuta aislada, sin acceso a tus archivos ni a Fractax. Cámara, micrófono, ubicación y notificaciones del navegador están bloqueados: solo se permite copiar al portapapeles, la pantalla completa y abrir AutoFirma.</p>
           </div>
         </div>
       </div>
