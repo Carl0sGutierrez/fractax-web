@@ -323,3 +323,19 @@ h2 { font-size: var(--t-xl); line-height: 1.12; margin: 0 0 16px; }
 /* En guias y articulos el video sale de la columna de texto. */
 .article-video { width: min(1112px, calc(100vw - 48px)); margin: 8px 0 12px 50%; transform: translateX(-50%); }
 @media (max-width: 760px) { .article-video { width: 100%; margin-left: 0; transform: none; } }
+
+/* Lista de espera de Business (ver openNotifyDialog en site.js) */
+.notify-dialog { width: min(440px, calc(100vw - 32px)); padding: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); color: var(--text); box-shadow: 0 18px 50px rgba(15, 15, 15, 0.18); }
+.notify-dialog::backdrop { background: rgba(15, 15, 15, 0.35); }
+.notify-form { display: flex; flex-direction: column; gap: 10px; padding: 24px; }
+.notify-form h3 { margin: 0; font-size: 19px; color: var(--ink); }
+.notify-text { margin: 0 0 4px; font-size: 14.5px; line-height: 1.5; color: var(--slate); }
+.notify-label { font-size: 13px; font-weight: 600; color: var(--ink); }
+.notify-form input[type="email"] { padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; font: inherit; font-size: 15px; color: var(--ink); background: var(--paper); }
+.notify-form input[type="email"]:focus { outline: 2px solid var(--blue); outline-offset: 0; border-color: transparent; }
+.notify-consent { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.45; color: var(--slate); }
+.notify-consent input { margin-top: 2px; flex: none; }
+.notify-consent a { color: var(--blue); }
+.notify-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.notify-status { margin: 0; min-height: 1em; font-size: 13px; color: #E03E3E; }
+.notify-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px; }

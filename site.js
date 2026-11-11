@@ -94,3 +94,97 @@ document.addEventListener('click', (e) => {
   if (!key || !(key in DOWNLOAD_KEYS || key === 'auto')) return
   window.goatcounter.count({ path: 'descarga-' + key, title: 'Descarga ' + key, event: true })
 })
+
+// --- Lista de espera de Business ("Avisadme cuando este") ----------------
+// Los botones con data-notify="business" abren un formulario que guarda el
+// email en Brevo (lista "Fractax Business"; Brevo manda un email para
+// confirmar el alta, doble opt-in). BREVO_BUSINESS_FORM es la direccion del
+// formulario de Brevo: Brevo -> Contactos -> Formularios -> el formulario ->
+// Compartir -> "action" del codigo HTML (https://...sibforms.com/serve/...).
+// Mientras este vacia, el boton abre el correo como antes.
+const BREVO_BUSINESS_FORM = ''
+
+const NOTIFY_TEXT = {
+  es: {
+    title: 'Te avisamos cuando salga Business',
+    text: 'Déjanos tu email y te escribimos en cuanto Fractax Business esté disponible. Nada más.',
+    email: 'Tu email',
+    consent: 'Acepto que Fractax guarde mi email para avisarme del lanzamiento de Business, según la <a href="/privacidad.html" target="_blank">política de privacidad</a>.',
+    send: 'Avisadme',
+    cancel: 'Cancelar',
+    sending: 'Enviando…',
+    done: '¡Listo! Te hemos enviado un email: pulsa el enlace para confirmar y quedarás en la lista.',
+    error: 'No se ha podido enviar. Inténtalo de nuevo o escríbenos a support@fractax.com.',
+    close: 'Cerrar',
+  },
+  en: {
+    title: 'We’ll let you know when Business is out',
+    text: 'Leave your email and we’ll write as soon as Fractax Business is available. Nothing else.',
+    email: 'Your email',
+    consent: 'I agree that Fractax stores my email to tell me when Business launches, as described in the <a href="/en/privacy.html" target="_blank">privacy policy</a>.',
+    send: 'Notify me',
+    cancel: 'Cancel',
+    sending: 'Sending…',
+    done: 'Done! We’ve sent you an email: click the link to confirm and you’ll be on the list.',
+    error: 'It couldn’t be sent. Please try again or write to support@fractax.com.',
+    close: 'Close',
+  },
+}
+
+function openNotifyDialog() {
+  const lang = (document.documentElement.lang || 'es').startsWith('en') ? 'en' : 'es'
+  const tx = NOTIFY_TEXT[lang]
+  const dialog = document.createElement('dialog')
+  dialog.className = 'notify-dialog'
+  dialog.innerHTML = `
+    <form class="notify-form">
+      <h3>${tx.title}</h3>
+      <p class="notify-text">${tx.text}</p>
+      <label class="notify-label" for="notify-email">${tx.email}</label>
+      <input id="notify-email" name="EMAIL" type="email" required autocomplete="email" placeholder="nombre@despacho.es">
+      <!-- Trampa para bots de Brevo: debe ir vacio -->
+      <input name="email_address_check" type="text" value="" tabindex="-1" autocomplete="off" class="notify-trap" aria-hidden="true">
+      <input type="hidden" name="locale" value="${lang}">
+      <label class="notify-consent"><input name="OPT_IN" type="checkbox" value="1" required> <span>${tx.consent}</span></label>
+      <p class="notify-status" role="status"></p>
+      <div class="notify-actions">
+        <button type="button" class="btn btn-outline btn-small notify-cancel">${tx.cancel}</button>
+        <button type="submit" class="btn btn-primary btn-small notify-send">${tx.send}</button>
+      </div>
+    </form>`
+  document.body.appendChild(dialog)
+  const form = dialog.querySelector('form')
+  const status = dialog.querySelector('.notify-status')
+  const send = dialog.querySelector('.notify-send')
+  const cancel = dialog.querySelector('.notify-cancel')
+  const close = () => { dialog.close(); dialog.remove() }
+  cancel.addEventListener('click', close)
+  dialog.addEventListener('cancel', (e) => { e.preventDefault(); close() })
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    send.disabled = true
+    send.textContent = tx.sending
+    status.textContent = ''
+    try {
+      // Brevo no deja leer la respuesta desde otra web (no-cors): si la
+      // peticion sale, el alta queda pendiente de que la persona confirme.
+      await fetch(BREVO_BUSINESS_FORM, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
+      form.innerHTML = `<h3>${tx.title}</h3><p class="notify-text">${tx.done}</p>
+        <div class="notify-actions"><button type="button" class="btn btn-primary btn-small">${tx.close}</button></div>`
+      form.querySelector('button').addEventListener('click', close)
+      if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: 'lista-business', title: 'Alta lista Business', event: true })
+    } catch {
+      status.textContent = tx.error
+      send.disabled = false
+      send.textContent = tx.send
+    }
+  })
+  dialog.showModal()
+  dialog.querySelector('#notify-email').focus()
+}
+
+if (BREVO_BUSINESS_FORM && /^https:\/\//.test(BREVO_BUSINESS_FORM)) {
+  for (const el of document.querySelectorAll('[data-notify="business"]')) {
+    el.addEventListener('click', (e) => { e.preventDefault(); openNotifyDialog() })
+  }
+}
