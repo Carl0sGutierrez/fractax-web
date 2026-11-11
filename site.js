@@ -96,13 +96,13 @@ document.addEventListener('click', (e) => {
 })
 
 // --- Lista de espera de Business ("Avisadme cuando este") ----------------
-// Los botones con data-notify="business" abren un formulario que guarda el
-// email en Brevo (lista "Fractax Business"; Brevo manda un email para
-// confirmar el alta, doble opt-in). BREVO_BUSINESS_FORM es la direccion del
-// formulario de Brevo: Brevo -> Contactos -> Formularios -> el formulario ->
-// Compartir -> "action" del codigo HTML (https://...sibforms.com/serve/...).
-// Mientras este vacia, el boton abre el correo como antes.
-const BREVO_BUSINESS_FORM = ''
+// Los botones con data-notify="business" abren un formulario; cada alta
+// llega por email a carlosgutierrez@fractax.com a traves de FormSubmit
+// (formsubmit.co, sin cuenta). La primera vez FormSubmit manda un email
+// para activar el formulario; despues da un codigo aleatorio que se pone
+// aqui en lugar de la direccion, para que no se vea en la web.
+// Vacio: el boton abre el correo como antes.
+const NOTIFY_ENDPOINT = 'https://formsubmit.co/ajax/carlosgutierrez@fractax.com'
 
 const NOTIFY_TEXT = {
   es: {
@@ -113,7 +113,7 @@ const NOTIFY_TEXT = {
     send: 'Avisadme',
     cancel: 'Cancelar',
     sending: 'Enviando…',
-    done: '¡Listo! Te hemos enviado un email: pulsa el enlace para confirmar y quedarás en la lista.',
+    done: '¡Listo! Estás en la lista: te escribiremos en cuanto Fractax Business esté disponible.',
     error: 'No se ha podido enviar. Inténtalo de nuevo o escríbenos a support@fractax.com.',
     close: 'Cerrar',
   },
@@ -125,7 +125,7 @@ const NOTIFY_TEXT = {
     send: 'Notify me',
     cancel: 'Cancel',
     sending: 'Sending…',
-    done: 'Done! We’ve sent you an email: click the link to confirm and you’ll be on the list.',
+    done: 'Done! You’re on the list: we’ll write as soon as Fractax Business is available.',
     error: 'It couldn’t be sent. Please try again or write to support@fractax.com.',
     close: 'Close',
   },
@@ -141,11 +141,10 @@ function openNotifyDialog() {
       <h3>${tx.title}</h3>
       <p class="notify-text">${tx.text}</p>
       <label class="notify-label" for="notify-email">${tx.email}</label>
-      <input id="notify-email" name="EMAIL" type="email" required autocomplete="email" placeholder="nombre@despacho.es">
-      <!-- Trampa para bots de Brevo: debe ir vacio -->
-      <input name="email_address_check" type="text" value="" tabindex="-1" autocomplete="off" class="notify-trap" aria-hidden="true">
-      <input type="hidden" name="locale" value="${lang}">
-      <label class="notify-consent"><input name="OPT_IN" type="checkbox" value="1" required> <span>${tx.consent}</span></label>
+      <input id="notify-email" name="email" type="email" required autocomplete="email" placeholder="nombre@despacho.es">
+      <!-- Trampa para bots (FormSubmit descarta el envio si viene relleno) -->
+      <input name="_honey" type="text" value="" tabindex="-1" autocomplete="off" class="notify-trap" aria-hidden="true">
+      <label class="notify-consent"><input name="consent" type="checkbox" value="1" required> <span>${tx.consent}</span></label>
       <p class="notify-status" role="status"></p>
       <div class="notify-actions">
         <button type="button" class="btn btn-outline btn-small notify-cancel">${tx.cancel}</button>
@@ -166,9 +165,23 @@ function openNotifyDialog() {
     send.textContent = tx.sending
     status.textContent = ''
     try {
-      // Brevo no deja leer la respuesta desde otra web (no-cors): si la
-      // peticion sale, el alta queda pendiente de que la persona confirme.
-      await fetch(BREVO_BUSINESS_FORM, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
+      const data = new FormData(form)
+      const res = await fetch(NOTIFY_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          email: data.get('email'),
+          idioma: lang,
+          pagina: location.pathname,
+          _subject: 'Lista de espera Fractax Business',
+          _replyto: data.get('email'),
+          _template: 'table',
+          _captcha: 'false',
+          _honey: data.get('_honey') || '',
+        }),
+      })
+      const json = await res.json().catch(() => ({}))
+      if (!res.ok || String(json.success) !== 'true') throw new Error(json.message || 'error')
       form.innerHTML = `<h3>${tx.title}</h3><p class="notify-text">${tx.done}</p>
         <div class="notify-actions"><button type="button" class="btn btn-primary btn-small">${tx.close}</button></div>`
       form.querySelector('button').addEventListener('click', close)
@@ -183,7 +196,7 @@ function openNotifyDialog() {
   dialog.querySelector('#notify-email').focus()
 }
 
-if (BREVO_BUSINESS_FORM && /^https:\/\//.test(BREVO_BUSINESS_FORM)) {
+if (NOTIFY_ENDPOINT && /^https:\/\//.test(NOTIFY_ENDPOINT)) {
   for (const el of document.querySelectorAll('[data-notify="business"]')) {
     el.addEventListener('click', (e) => { e.preventDefault(); openNotifyDialog() })
   }
