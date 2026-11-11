@@ -107,9 +107,12 @@ const NOTIFY_ENDPOINT = 'https://formsubmit.co/ajax/carlosgutierrez@fractax.com'
 const NOTIFY_TEXT = {
   es: {
     title: 'Te avisamos cuando salga Business',
-    text: 'Déjanos tu email y te escribimos en cuanto Fractax Business esté disponible. Nada más.',
-    email: 'Tu email',
-    consent: 'Acepto que Fractax guarde mi email para avisarme del lanzamiento de Business, según la <a href="/privacidad.html" target="_blank">política de privacidad</a>.',
+    text: 'Déjanos tu organización y tu email profesional y te escribimos en cuanto Fractax Business esté disponible. Nada más.',
+    org: 'Nombre de tu organización',
+    orgPlaceholder: 'Asesoría García S.L.',
+    email: 'Email profesional',
+    emailPlaceholder: 'nombre@tudespacho.es',
+    consent: 'Acepto que Fractax guarde estos datos para avisarme del lanzamiento de Business, según la <a href="/privacidad.html" target="_blank">política de privacidad</a>.',
     send: 'Avisadme',
     cancel: 'Cancelar',
     sending: 'Enviando…',
@@ -119,9 +122,12 @@ const NOTIFY_TEXT = {
   },
   en: {
     title: 'We’ll let you know when Business is out',
-    text: 'Leave your email and we’ll write as soon as Fractax Business is available. Nothing else.',
-    email: 'Your email',
-    consent: 'I agree that Fractax stores my email to tell me when Business launches, as described in the <a href="/en/privacy.html" target="_blank">privacy policy</a>.',
+    text: 'Leave your organization and work email and we’ll write as soon as Fractax Business is available. Nothing else.',
+    org: 'Organization name',
+    orgPlaceholder: 'Smith & Partners Ltd',
+    email: 'Work email',
+    emailPlaceholder: 'name@yourfirm.com',
+    consent: 'I agree that Fractax stores these details to tell me when Business launches, as described in the <a href="/en/privacy.html" target="_blank">privacy policy</a>.',
     send: 'Notify me',
     cancel: 'Cancel',
     sending: 'Sending…',
@@ -140,8 +146,10 @@ function openNotifyDialog() {
     <form class="notify-form">
       <h3>${tx.title}</h3>
       <p class="notify-text">${tx.text}</p>
+      <label class="notify-label" for="notify-org">${tx.org}</label>
+      <input id="notify-org" name="organizacion" type="text" required maxlength="120" autocomplete="organization" placeholder="${tx.orgPlaceholder}">
       <label class="notify-label" for="notify-email">${tx.email}</label>
-      <input id="notify-email" name="email" type="email" required autocomplete="email" placeholder="nombre@despacho.es">
+      <input id="notify-email" name="email" type="email" required maxlength="160" autocomplete="work email" placeholder="${tx.emailPlaceholder}">
       <!-- Trampa para bots (FormSubmit descarta el envio si viene relleno) -->
       <input name="_honey" type="text" value="" tabindex="-1" autocomplete="off" class="notify-trap" aria-hidden="true">
       <label class="notify-consent"><input name="consent" type="checkbox" value="1" required> <span>${tx.consent}</span></label>
@@ -170,6 +178,7 @@ function openNotifyDialog() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
+          organizacion: String(data.get('organizacion') || '').trim(),
           email: data.get('email'),
           idioma: lang,
           pagina: location.pathname,
@@ -193,7 +202,7 @@ function openNotifyDialog() {
     }
   })
   dialog.showModal()
-  dialog.querySelector('#notify-email').focus()
+  dialog.querySelector('#notify-org').focus()
 }
 
 if (NOTIFY_ENDPOINT && /^https:\/\//.test(NOTIFY_ENDPOINT)) {
