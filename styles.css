@@ -339,3 +339,17 @@ h2 { font-size: var(--t-xl); line-height: 1.12; margin: 0 0 16px; }
 .notify-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .notify-status { margin: 0; min-height: 1em; font-size: 13px; color: #E03E3E; }
 .notify-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px; }
+
+/* Comparativa: logos de los navegadores y de Fractax en la cabecera */
+.compare th { vertical-align: bottom; }
+.compare-brand { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 650; color: var(--ink); }
+.compare th:last-child .compare-brand { color: var(--blue); }
+.compare-logos { display: inline-flex; gap: 6px; }
+.compare-logos img, .compare-brand > img { display: block; width: 22px; height: 22px; }
+.compare-sub { display: block; margin-top: 6px; font-size: 13px; font-weight: 500; color: var(--slate); }
+@media (max-width: 640px) {
+  .compare thead { display: block; margin-bottom: 4px; }
+  .compare thead tr { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0; border: 0; }
+  .compare thead th { padding: 0; }
+  .compare-brand { flex-direction: column; align-items: flex-start; gap: 6px; font-size: 14px; }
+}

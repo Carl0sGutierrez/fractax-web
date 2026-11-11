@@ -64,7 +64,10 @@
           <p>Los navegadores están pensados para una persona con un certificado. Fractax, para quien entra en las sedes con varios.</p>
         </div>
         <table class="compare">
-          <thead><tr><th scope="col">Con un navegador normal</th><th scope="col">Con Fractax</th></tr></thead>
+          <thead><tr>
+            <th scope="col"><span class="compare-brand"><span class="compare-logos"><img src="/img/navegadores/chrome.svg" alt="Chrome" width="22" height="22"><img src="/img/navegadores/firefox.svg" alt="Firefox" width="22" height="22"><img src="/img/navegadores/safari.svg" alt="Safari" width="22" height="22"><img src="/img/navegadores/edge.svg" alt="Edge" width="22" height="22"></span>Con un navegador normal</span><span class="compare-sub">Chrome, Firefox, Safari, Edge…</span></th>
+            <th scope="col"><span class="compare-brand"><img src="/img/logo.svg" alt="" width="24" height="24">Con Fractax</span><span class="compare-sub">Basado en Chromium, el motor de Chrome y Edge</span></th>
+          </tr></thead>
           <tbody>
             <tr><td data-label="Con un navegador normal">El navegador recuerda el primer certificado que elegiste. Para cambiar hay que cerrarlo todo o abrir una ventana privada.</td><td data-label="Con Fractax">Cada certificado tiene su propio espacio. Cambias de uno a otro con un clic.</td></tr>
             <tr><td data-label="Con un navegador normal">Aparece la lista de certificados una y otra vez, y es fácil elegir el que no era.</td><td data-label="Con Fractax">Fractax usa solo el certificado de la identidad en la que estás.</td></tr>
@@ -74,6 +77,68 @@
             <tr><td data-label="Con un navegador normal">Descubres que un certificado ha caducado cuando ya no puedes entrar en la sede.</td><td data-label="Con Fractax">Fractax te avisa con la antelación que elijas.</td></tr>
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Por dentro: cómo separa Fractax cada certificado</h2>
+          <p>Fractax está basado en <strong>Chromium</strong>, el mismo motor que usan Chrome y Edge, así que las sedes se ven y funcionan igual. La diferencia está en cómo organiza las sesiones.</p>
+        </div>
+        <div class="feature-list">
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+            <h3>Un contexto de navegación por certificado</h3>
+            <p>Cada identidad tiene su propio contexto de Chromium, con sus cookies, su caché, su almacenamiento y sus sesiones. Lo que hace una identidad en una sede no lo ve ninguna otra.</p>
+          </div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
+            <h3>El certificado no se cruza</h3>
+            <p>Chromium recuerda qué certificado elegiste para todo el navegador, no para cada pestaña. Por eso un navegador normal sigue usando el primero. En Fractax cada identidad tiene su contexto, y cuando una sede pide certificado Fractax responde solo con el de la identidad en la que estás.</p>
+          </div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg>
+            <h3>Sesiones solo en memoria</h3>
+            <p>Las sesiones de las sedes se guardan en memoria, no en el disco: al cerrar Fractax desaparecen. «Cerrar sesión» destruye el contexto de esa identidad y crea uno limpio, así que la sede vuelve a pedir el certificado.</p>
+          </div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            <h3>Las sedes, aisladas de Fractax</h3>
+            <p>Cada página se ejecuta en el entorno aislado (<em>sandbox</em>) de Chromium, sin acceso a tus archivos ni a Fractax. Cámara, micrófono, ubicación y notificaciones del navegador están bloqueados: solo se permite copiar al portapapeles, la pantalla completa y abrir AutoFirma.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tinted">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Seguridad</h2>
+          <p>Fractax trabaja con certificados digitales, así que la seguridad no es un añadido: está en cómo se guarda cada dato.</p>
+        </div>
+        <div class="feature-list">
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <h3>Caja fuerte cifrada con AES-256</h3>
+            <p>Todo lo que Fractax guarda va cifrado con <strong>AES-256-GCM</strong>. La clave se obtiene de tu contraseña maestra con <strong>scrypt</strong> y no se guarda en ningún sitio: sin la contraseña, la caja fuerte no se puede abrir.</p>
+          </div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7"/><path d="M2 13h20v5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z"/><path d="M6 17h.01"/></svg>
+            <h3>La clave privada se queda en tu sistema</h3>
+            <p>Si importas un certificado del Llavero de Mac o del almacén de Windows, Fractax no copia la clave privada: solo guarda sus datos y su huella para reconocerlo, y la identificación en las sedes sigue pasando por el sistema operativo. Solo si activas las notificaciones automáticas guarda una copia, cifrada dentro de la caja fuerte, para consultar la DEHú.</p>
+          </div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            <h3>Una aplicación que no se deja modificar</h3>
+            <p>En Mac, Fractax está firmado y notarizado por Apple. El paquete comprueba su propia integridad: si alguien cambia su código, no arranca. En la versión instalada no hay modos de depuración que permitan ejecutar otro código.</p>
+          </div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.9 4.2A10 10 0 0 1 12 4c6.5 0 10 8 10 8a17 17 0 0 1-2.2 3.2"/><path d="M6.6 6.6A17 17 0 0 0 2 12s3.5 8 10 8a9.7 9.7 0 0 0 5.4-1.6"/><path d="m2 2 20 20"/></svg>
+            <h3>Sin rastreo</h3>
+            <p>Fractax no envía estadísticas de uso ni registra lo que haces. Los registros de diagnóstico están apagados, y si los activas ocultan los DNI, NIE y CIF.</p>
+          </div>
+        </div>
       </div>
     </section>
 
